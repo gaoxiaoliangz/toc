@@ -1,0 +1,77 @@
+$text_3: #999;
+$text_2: #666;
+$text_1: #222;
+
+%uls {
+  .title {
+    font-size: 16px;
+    font-weight: 300;
+    color: $text_3;
+    padding: 40px 0 20px;
+  }
+  font-size: 18px;
+  ul {
+    margin-left: 30px;
+    li {
+      a {
+        line-height: 1.8;
+        color: $text_1;
+        border-bottom: 1px solid $text_1;
+        &:hover {
+          color: $text_2;
+        }
+      }
+    }
+  }
+  >ul {
+    padding-bottom: 40px;
+  }
+}
+
+.nav-gen-by-outliner {
+  @extend %uls;
+  background: #f2f2f2;
+  margin-bottom: 20px;
+  padding: 0 40px;
+}
+
+.nav-gen-by-outliner-fixed {
+  background: #f2f2f2;
+  z-index: 990;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  padding: 0;
+  .container {
+    overflow-y: scroll;
+    min-height: 40px;
+    position: relative;
+    .current-item {
+      width: 100%;
+      background: #f2f2f2;
+      line-height: 40px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 18px;
+    }
+  }
+  .wrap {
+    background: #f2f2f2;
+    li.active {
+      >a {
+        font-weight: bold;
+      }
+    }
+    @extend %uls;
+  }
+  .icon {
+    position: fixed;
+    left: 0;
+    top: 0;
+  }
+}
+.nav-gen-by-outliner-fixed.closed {
+  overflow: hidden;
+}
