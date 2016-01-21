@@ -12,10 +12,13 @@ $text_1: #222;
   font-size: 18px;
   ul {
     margin-left: 30px;
+    padding: 0;
+    list-style: none;
     li {
       a {
         line-height: 1.8;
         color: $text_1;
+        text-decoration: none;
         border-bottom: 1px solid $text_1;
         &:hover {
           color: $text_2;

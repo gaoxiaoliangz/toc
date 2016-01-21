@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title template
+    title Example
     meta(charset="utf-8")
     meta(http-equiv="X-UA-Compatible" content="IE=edge,chrome=1")
     meta(name="viewport" content="target-densitydpi=device-dpi, width=device-width, user-scalable=yes")
@@ -9,6 +9,7 @@ html
     link(rel="stylesheet" href="../lib/normalize.css")
     link(rel="stylesheet" href="style.css")
     link(rel="stylesheet" href="../dist/css/outliner.min.css")
+    link(rel="stylesheet" href="../dist/css/animateicon.min.css")
 
   body
     .container
@@ -36,7 +37,10 @@ html
         p MIT条款可与其他授权条款并存。另外，MIT条款也是自由软件基金会（FSF）所认可的自由软件授权条款，与GPL兼容。
 
     script(src="../lib/jquery/jquery.min.js")
-    //- script(src="../dist/js/animateicon.min.js")
+    script(src="../src/js/animateicon.js")
     script(src="../dist/js/outliner.min.js")
     script.
       //- $(".content").genOutline(null,true);
+      Outliner(".content",{
+        hasNavMenu: true
+      });

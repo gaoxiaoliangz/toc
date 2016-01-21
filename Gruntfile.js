@@ -33,6 +33,7 @@ module.exports = function(grunt) {
         },
         files: {
           "dist/css/outliner.min.css": "src/scss/outliner.scss",
+          "dist/css/animateicon.min.css": "src/scss/animateicon.scss"
         }
       },
       example: {
