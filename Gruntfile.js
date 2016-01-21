@@ -17,8 +17,7 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         sourceMap: true,
-        mangle: {
-        }
+        mangle: false
       },
       target: {
         files: {
@@ -30,11 +29,19 @@ module.exports = function(grunt) {
     sass: {
       dist: {
         options: {
-          style: 'expanded'
+          style: 'compressed'
         },
         files: {
           "dist/css/outliner.min.css": "src/scss/outliner.scss",
-          "example/style.min.css": "example/style.scss"
+        }
+      },
+      example: {
+        options: {
+          style: 'expened',
+          sourcemap: 'none'
+        },
+        files: {
+          "example/style.css": "src/scss/style.scss"
         }
       }
     },
@@ -47,7 +54,7 @@ module.exports = function(grunt) {
           }
         },
         files: {
-          "example/index.html": "example/index.jade"
+          "example/index.html": "src/jade/index.jade"
         }
       }
     },
@@ -92,7 +99,7 @@ module.exports = function(grunt) {
         }
       },
       html: {
-        files: ['example/*.jade'],
+        files: ['src/jade/*.jade'],
         tasks: ['jade'],
         options: {
           spawn: false,

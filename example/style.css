@@ -1,0 +1,6 @@
+.container {
+  width: 960px;
+  margin: 0 auto; }
+.container .content {
+  font-size: 18px;
+  line-height: 1.7; }
