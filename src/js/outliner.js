@@ -1,4 +1,4 @@
-/* outliner.js v0.1.0, (c) 2015 ~ 2016 Gao Liang. - https://github.com/gaoxiaoliangz/outliner
+/* outliner.js v0.2.0, (c) 2015 ~ 2016 Gao Liang. - https://github.com/gaoxiaoliangz/outliner
  * @license MIT */
 
 ;(function(root, factory) {
@@ -6,12 +6,16 @@
     define(factory);
   } else if (typeof exports === 'object') {
     module.exports = factory();
-  } else {
-    root.Outliner = factory();
+  } else if (typeof jQuery === "undefined"){
+    console.error("Error:", "jQuery is needed to run Outliner!");
+  }else {
+    root.Outliner = factory(root);
   }
-})(this, function() {
-  var version = "0.1.0";
+})(this, function(root) {
+  var version = "0.2.0";
+
   var Outliner = function(selector, config){
+    var s = this;
     return new Outliner.prototype.init(selector, config);
   }
 
@@ -36,15 +40,23 @@
       s.selector = selector;
       s.contentTable = null;
       s.hTags = [];
+      s.tableClass = "outliner-content-table";
       s.config = {
         hasNavMenu: config.hasNavMenu || false
       }
       s.mountComponent();
 
-      $(s.contentTable.find(".item>a")).on("click",s.handleLinkClick);
+      if(s.config.hasNavMenu){
+        s.navMenu.init(s);
+      }
+
+      $(s.contentTable.find(".item>a")).on("click",function(){
+        s.handleLinkClick(this);
+        return false;
+      });
     },
     genContentTable:function(){
-      var contentTable = $("<div class='nav-gen-by-outliner'><div class='title'>目录</div></div>");
+      var contentTable = $("<div class='"+this.tableClass+"'><div class='title'>目录</div></div>");
       var domPinter = contentTable.append("<ul></ul>").find(">ul");
       var list = [];
       var content = $(this.selector);
@@ -62,7 +74,7 @@
 
           list_copy.reverse();
           list.push([h,id]);
-          $(this).attr("id",id).attr("class","outlined-h-tag");
+          $(this).attr("id",id).attr("class","outline-h-tag");
 
           var has_parent = list_copy.some(function(i){
             if(i[0]<h){
@@ -89,31 +101,27 @@
         }
       });
 
-      // get h tag position info
-      $(s.selector).find(".outlined-h-tag").each(function(){
-        s.hTags.push([$(this).attr("id"),$(this).offset().top]);
-      });
-
       this.contentTable = contentTable;
       return contentTable;
     },
     mountComponent:function(){
-      this.genContentTable();
-      this.contentTable.insertBefore($(this.selector));
+      var s = this;
+      s.genContentTable();
+      s.contentTable.insertBefore($(s.selector));
 
-      if(this.config.hasNavMenu){
-        this.navMenu.init(this);
-      }
+      // get h tag position info
+      $(s.selector).find(".outline-h-tag").each(function(){
+        s.hTags.push([$(this).attr("id"),$(this).offset().top]);
+      });
     },
-    handleLinkClick:function(){
-      var tar_id = $(this).parent().attr("class").split(" ")[1];
+    handleLinkClick:function(context){
+      var tar_id = $(context).parent().attr("class").split(" ")[1];
       var top = $("#"+tar_id).offset().top;
       if(Outliner.isIE()){
         $("html").animate({scrollTop: top},300);
       }else{
         $("body").animate({scrollTop: top},300);
       }
-      return false;
     },
 
     navMenu: {
@@ -122,46 +130,35 @@
         s.dom = null;
         s.isNavShown = false;
         s.id = null;
+        s.class = "outliner-nav-menu";
         s.mount(context);
 
         // nav menu event handling
-        $("#"+s.id).find(".item>a").on("click",context.handleLinkClick,function(){
+        $("#"+s.id).find(".item>a").on("click",function(){
+          context.handleLinkClick(this);
           s.close(context);
+          return false;
         });
-        $("body").on("mouseenter","#"+s.id+".closed .icon",function(){
-          s.open(context);
-        });
-        $("body").on("click","#"+s.id+".closed .icon",function(){
-          s.open(context);
-        });
-        $("body").on("mouseleave","#"+s.id+".open",function(){
-          s.close(context);
-        });
-        $("body").on("click","#"+s.id+".open .icon",function(){
-          s.close(context);
-        });
-        $(window).scroll(function () {
-          s.handleScroll(context);
-        });
+
+        $("body")
+          .on("click","#"+s.id+".closed .icon",function(){s.open()})
+          .on("click","#"+s.id+".open .icon",function(){s.close()})
+          .on("keydown",function(e){
+            if($("#"+s.id).hasClass("open") && e.keyCode == 27) s.close();
+          })
+
+        $(window).scroll(function () {s.handleScroll(context)});
       },
       mount:function(context){
-        // todo
-        if(!$.fn.animateIcon){
-          alert("animateicon.js is required!");
-        }
-
         var h_tag_info = [];
         var nav_id = this.id = "nav-gen-by-outliner-fixed-"+parseInt(Math.random()*Math.pow(10,6));
-        $("body").append("<div style='display:none;' class='nav-gen-by-outliner-fixed closed' id='"+nav_id+"'>"+
-          "<div class='icon icon-menu-animated'></div>"+
+        $("body").append("<div style='display:none;' class='"+this.class+" closed' id='"+nav_id+"'>"+
+          "<span class='icon icon-animated icon-animated-menu state-1'></span>"+
           "<div class='container'>"+
             "<div class='current-item'></div>"+
             "<div class='wrap' style='display:none;'>"+context.contentTable.html()+"</div>"+
           "</div>"+
         "</div>");
-        var nav = $("#"+nav_id);
-        nav.find(".icon").animateIcon("init");
-
         this.dom = $("#"+nav_id);
       },
       handleScroll:function(context){
@@ -176,7 +173,6 @@
           nav.slideUp();
           this.isNavShown = false;
         }
-
         if(hId){
           var tar_item_class = ".h"+hId.substr(1,6);
           nav.find(".item").not(tar_item_class).removeClass("active");
@@ -198,36 +194,34 @@
         }
         return result;
       },
-      open:function(context){
-        var nav = context.navMenu.dom;
-
+      open:function(){
+        var nav = this.dom;
         Outliner.lockScroll();
         nav.find(".wrap").slideDown("fast",function(){
-          nav.removeClass("closed");
-          nav.addClass("open");
+          nav.css({"height": "999em"}).removeClass("closed").addClass("open");
           nav.find(".current-item").hide();
-          nav.find(".icon").animateIcon("open");
+          nav.find(".icon").removeClass("state-1").addClass("state-2");
           nav.find(".container").css({"height": $(window).height()+100});
-          nav.css({"height": "999em"});
         });
       },
-      close:function(context){
-        var nav = context.navMenu.dom;
-
+      close:function(){
+        var nav = this.dom;
         Outliner.unlockScroll();
         nav.find(".wrap").slideUp("fast",function(){
-          nav.css({"height": "auto"});
+          nav.css({"height": "auto"}).removeClass("open").addClass("closed");
           nav.find(".container").css({"height": "auto"});
-          nav.removeClass("open");
-          nav.addClass("closed");
           nav.find(".current-item").fadeIn();
-          nav.find(".icon").animateIcon("close");
+          nav.find(".icon").removeClass("state-2").addClass("state-1");
           $(this).clearQueue();
         });
       }
     },
   };
   Outliner.prototype.init.prototype = Outliner.prototype;
+
+  jQuery.fn.outliner = function(config){
+    return new Outliner(this, config);
+  }
 
   return Outliner;
 });

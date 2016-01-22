@@ -31,14 +31,14 @@ $text_1: #222;
   }
 }
 
-.nav-gen-by-outliner {
+.outliner-content-table {
   @extend %uls;
   background: #f2f2f2;
   margin-bottom: 20px;
   padding: 0 40px;
 }
 
-.nav-gen-by-outliner-fixed {
+.outliner-nav-menu {
   background: #f2f2f2;
   z-index: 990;
   position: fixed;
@@ -75,6 +75,8 @@ $text_1: #222;
     top: 0;
   }
 }
-.nav-gen-by-outliner-fixed.closed {
+.outliner-nav-menu.closed {
   overflow: hidden;
 }
+
+@import "icon-animated";

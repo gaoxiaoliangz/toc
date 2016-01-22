@@ -1,6 +1,6 @@
 {
   "name": "outliner",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Generate outline of your document via JavaScript based on the h tags",
   "repository": {
     "type": "git",

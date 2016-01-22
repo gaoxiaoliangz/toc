@@ -1,6 +1,9 @@
-.container {
-  width: 960px;
+body h1 {
+  margin: 50px 0;
+  font-size: 30px; }
+body .container {
+  width: 700px;
   margin: 0 auto; }
-.container .content {
+body .container .content {
   font-size: 18px;
   line-height: 1.7; }

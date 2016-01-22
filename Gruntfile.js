@@ -21,7 +21,7 @@ module.exports = function(grunt) {
       },
       target: {
         files: {
-          'dist/js/outliner.min.js': ['src/js/outliner.js','src/js/animateicon.js']
+          'dist/js/outliner.min.js': ['src/js/outliner.js']
         }
       }
     },
@@ -33,7 +33,6 @@ module.exports = function(grunt) {
         },
         files: {
           "dist/css/outliner.min.css": "src/scss/outliner.scss",
-          "dist/css/animateicon.min.css": "src/scss/animateicon.scss"
         }
       },
       example: {
