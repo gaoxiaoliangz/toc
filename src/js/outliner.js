@@ -56,14 +56,14 @@
       });
     },
     genContentTable:function(){
-      var contentTable = $("<div class='"+this.tableClass+"'><div class='title'>目录</div></div>");
+      var contentTable = $("<div class='outliner-content-wrap'><div class='title'>目录</div></div>");
       var domPinter = contentTable.append("<ul></ul>").find(">ul");
       var list = [];
       var content = $(this.selector);
       var s = this;
 
       content.children().each(function(){
-        if($(this).prop("tagName") in {"H1":1,"H2":2,"H3":3,"H4":4,"H5":5,"H6":6}){
+        if($(this).prop("tagName") in {"H2":2,"H3":3,"H4":4,"H5":5,"H6":6}){
           var id = "h"+parseInt(Math.random()*(Math.pow(10,6)));
           var h_text = $(this).text();
           var h = parseInt($(this).prop("tagName").substr(1,1));
@@ -100,6 +100,7 @@
           }
         }
       });
+      contentTable = $("<div class='"+this.tableClass+"'></div>").append(contentTable);
 
       this.contentTable = contentTable;
       return contentTable;
