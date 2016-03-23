@@ -1,27 +1,27 @@
-# Outliner
+# Outline
 Generate outline of your document via JavaScript based on the h tags
 
 ## Usage
 
 ```
-Outliner(".content",{
+Outline(".content",{
   hasNavMenu: true
 })
 ```
 
-Or you can you use Outliner in the jQuery style
+Or you can you use Outline in the jQuery style
 
 ```
-$(".content").outliner({
+$(".content").outline({
   hasNavMenu: true
 })
 ```
 
 ## Parameters
-Outliner(selector, config)
+Outline(selector, config)
 
 ### selector
-`selector` is the content you want Outliner to process.
+`selector` is the content you want Outline to process.
 
 ### config
 | option name | default value | description |
