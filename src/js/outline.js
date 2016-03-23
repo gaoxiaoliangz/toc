@@ -1,4 +1,4 @@
-/* outliner.js v0.2.0, (c) 2015 ~ 2016 Gao Liang. - https://github.com/gaoxiaoliangz/outliner
+/* Outline.js v0.2.0, (c) 2015 ~ 2016 Gao Liang. - https://github.com/gaoxiaoliangz/outline
  * @license MIT */
 
 ;(function(root, factory) {
@@ -7,40 +7,40 @@
   } else if (typeof exports === 'object') {
     module.exports = factory();
   } else if (typeof jQuery === "undefined"){
-    console.error("Error:", "jQuery is needed to run Outliner!");
+    console.error("Error:", "jQuery is needed to run Outline!");
   }else {
-    root.Outliner = factory(root);
+    root.Outline = factory(root);
   }
 })(this, function(root) {
   var version = "0.2.0";
 
-  var Outliner = function(selector, config){
+  var Outline = function(selector, config){
     var s = this;
-    return new Outliner.prototype.init(selector, config);
+    return new Outline.prototype.init(selector, config);
   }
 
-  Outliner.isIE = function(ver){
+  Outline.isIE = function(ver){
     var b = document.createElement('b')
     b.innerHTML = '<!--[if IE ' + ver + ']><i></i><![endif]-->'
     return b.getElementsByTagName('i').length === 1
   }
 
-  Outliner.lockScroll = function(){
+  Outline.lockScroll = function(){
     $("body").css({"overflow": "hidden"});
   }
 
-  Outliner.unlockScroll = function(){
+  Outline.unlockScroll = function(){
     $("body").css({"overflow": "auto"});
   }
 
-  Outliner.prototype = {
-    outliner: version,
+  Outline.prototype = {
+    outline: version,
     init:function(selector, config){
       var s = this;
       s.selector = selector;
       s.contentTable = null;
       s.hTags = [];
-      s.tableClass = "outliner-content-table";
+      s.tableClass = "outline-content-table";
       s.config = {
         hasNavMenu: config.hasNavMenu || false
       }
@@ -56,7 +56,7 @@
       });
     },
     genContentTable:function(){
-      var contentTable = $("<div class='outliner-content-wrap'><div class='title'>目录</div></div>");
+      var contentTable = $("<div class='outline-content-wrap'><div class='title'>目录</div></div>");
       var domPinter = contentTable.append("<ul></ul>").find(">ul");
       var list = [];
       var content = $(this.selector);
@@ -118,7 +118,7 @@
     handleLinkClick:function(context){
       var tar_id = $(context).parent().attr("class").split(" ")[1];
       var top = $("#"+tar_id).offset().top;
-      if(Outliner.isIE()){
+      if(Outline.isIE()){
         $("html").animate({scrollTop: top},300);
       }else{
         $("body").animate({scrollTop: top},300);
@@ -131,7 +131,7 @@
         s.dom = null;
         s.isNavShown = false;
         s.id = null;
-        s.class = "outliner-nav-menu";
+        s.class = "outline-nav-menu";
         s.mount(context);
 
         // nav menu event handling
@@ -152,7 +152,7 @@
       },
       mount:function(context){
         var h_tag_info = [];
-        var nav_id = this.id = "nav-gen-by-outliner-fixed-"+parseInt(Math.random()*Math.pow(10,6));
+        var nav_id = this.id = "nav-gen-by-outline-fixed-"+parseInt(Math.random()*Math.pow(10,6));
         $("body").append("<div style='display:none;' class='"+this.class+" closed' id='"+nav_id+"'>"+
           "<span class='icon icon-animated icon-animated-menu state-1'></span>"+
           "<div class='container'>"+
@@ -197,7 +197,7 @@
       },
       open:function(){
         var nav = this.dom;
-        Outliner.lockScroll();
+        Outline.lockScroll();
         nav.find(".wrap").slideDown("fast",function(){
           nav.css({"height": "999em"}).removeClass("closed").addClass("open");
           nav.find(".current-item").hide();
@@ -207,7 +207,7 @@
       },
       close:function(){
         var nav = this.dom;
-        Outliner.unlockScroll();
+        Outline.unlockScroll();
         nav.find(".wrap").slideUp("fast",function(){
           nav.css({"height": "auto"}).removeClass("open").addClass("closed");
           nav.find(".container").css({"height": "auto"});
@@ -218,11 +218,11 @@
       }
     },
   };
-  Outliner.prototype.init.prototype = Outliner.prototype;
+  Outline.prototype.init.prototype = Outline.prototype;
 
-  jQuery.fn.outliner = function(config){
-    return new Outliner(this, config);
+  jQuery.fn.outline = function(config){
+    return new Outline(this, config);
   }
 
-  return Outliner;
+  return Outline;
 });

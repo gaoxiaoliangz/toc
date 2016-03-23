@@ -16,12 +16,12 @@ module.exports = function(grunt) {
 
     uglify: {
       options: {
-        sourceMap: true,
+        sourceMap: false,
         mangle: false
       },
       target: {
         files: {
-          'dist/js/outliner.min.js': ['src/js/outliner.js']
+          'dist/js/outline.min.js': ['src/js/outline.js']
         }
       }
     },
@@ -29,10 +29,11 @@ module.exports = function(grunt) {
     sass: {
       dist: {
         options: {
-          style: 'compressed'
+          style: 'compressed',
+          sourcemap: 'none',
         },
         files: {
-          "dist/css/outliner.min.css": "src/scss/outliner.scss",
+          "dist/css/outline.min.css": "src/scss/outline.scss",
         }
       },
       example: {

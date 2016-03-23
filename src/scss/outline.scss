@@ -31,18 +31,18 @@ $text_1: #222;
   }
 }
 
-.outliner-content-table {
+.outline-content-table {
 
   background: #f2f2f2;
   margin-bottom: 20px;
   padding: 0 40px;
-  .outliner-content-wrap {
+  .outline-content-wrap {
     @extend %uls;
     overflow: hidden;
   }
 }
 
-.outliner-nav-menu {
+.outline-nav-menu {
   background: #f2f2f2;
   z-index: 990;
   position: fixed;
@@ -79,7 +79,7 @@ $text_1: #222;
     top: 0;
   }
 }
-.outliner-nav-menu.closed {
+.outline-nav-menu.closed {
   overflow: hidden;
 }
 
