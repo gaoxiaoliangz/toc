@@ -111,5 +111,4 @@ module.exports = function(grunt) {
 
   grunt.registerTask("default", ["babel","sass","uglify","jade"]);
   grunt.registerTask('w',['watch']);
-
 };

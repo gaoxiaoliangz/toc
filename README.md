@@ -1,5 +1,6 @@
-# Outline
-Generate outline of your document via JavaScript based on the h tags
+# outline.js
+
+Generate the outline of your document via JavaScript based on h tags
 
 ## Usage
 
