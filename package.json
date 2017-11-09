@@ -23,8 +23,8 @@
   },
   "scripts": {
     "watch": "npm run build:js -- --watch & npm run build:css -- --watch",
-    "build:css": "node-sass-chokidar src/scss -o dist/css --recursive",
-    "build:js": "rollup src/main.js --output.format umd --name \"Outline\" --output.file dist/js/outline.js",
+    "build:css": "node-sass-chokidar src/scss -o dist --recursive",
+    "build:js": "rollup src/main.js --output.format umd --name \"Outline\" --output.file dist/outline.js",
     "build": "npm run build:js & npm run build:css"
   },
   "dependencies": {

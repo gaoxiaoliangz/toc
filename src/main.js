@@ -13,7 +13,7 @@ function Outline(config) {
   const tags = findHTags(this.$container)
   markTags(tags)
   const sections = buildStructure(tags)
-  const $toc = genTOCDom(sections).innerHTML
+  const $toc = genTOCDom(sections).outerHTML
   this.$container.innerHTML = this.$container.innerHTML.replace(this.config.tocTag[0], $toc)
 }
 
@@ -99,8 +99,9 @@ function genTOCDom(sections) {
     const $ul = document.createElement('ul')
     children.forEach(child => {
       const $li = document.createElement('li')
-      const $text = document.createTextNode(getHTagText(child.element))
-      $li.appendChild($text)
+      const hash = child.element.getAttribute('id')
+      const template = `<a href="#${hash}">${getHTagText(child.element)}</a>`
+      $li.innerHTML = template
       $ul.appendChild($li)
       if (child.children) {
         const $liWithChildren = document.createElement('li')
@@ -111,7 +112,13 @@ function genTOCDom(sections) {
     return $ul
   }
 
-  return createChildren(sections)
+  const $toc = document.createElement('div')
+  const $tocWrap = document.createElement('div')
+  $toc.setAttribute('class', 'outline-content-table')
+  $tocWrap.setAttribute('class', 'outline-content-wrap')
+  $tocWrap.appendChild(createChildren(sections))
+  $toc.appendChild($tocWrap)
+  return $toc
 }
 
 export default config => {
