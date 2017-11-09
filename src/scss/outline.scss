@@ -1,43 +1,40 @@
+@import "icon-animated";
+
 $text_3: #999;
 $text_2: #666;
 $text_1: #222;
 
-%uls {
-  .title {
+
+.otl-toc {
+  background: #f2f2f2;
+  margin-bottom: 20px;
+  padding: 20px;
+  &__wrap {
+    overflow: hidden;
+  }
+}
+
+.otl-list {
+  &__title {
     font-size: 16px;
     font-weight: 300;
     color: $text_3;
     padding: 40px 0 20px;
   }
-  font-size: 18px;
-  ul {
+  &__ul {
+    font-size: 18px;
     margin-left: 30px;
     padding: 0;
     list-style: none;
-    li {
-      a {
-        line-height: 1.8;
-        color: $text_1;
-        text-decoration: none;
-        border-bottom: 1px solid $text_1;
-        &:hover {
-          color: $text_2;
-        }
-      }
+  }
+  &__link {
+    line-height: 1.8;
+    color: $text_1;
+    text-decoration: none;
+    border-bottom: 1px solid $text_1;
+    &:hover {
+      color: $text_2;
     }
-  }
-  >ul {
-    padding-bottom: 40px;
-  }
-}
-
-.outline-content-table {
-  background: #f2f2f2;
-  margin-bottom: 20px;
-  padding: 0 40px;
-  .outline-content-wrap {
-    @extend %uls;
-    overflow: hidden;
   }
 }
 
@@ -70,7 +67,6 @@ $text_1: #222;
         font-weight: bold;
       }
     }
-    @extend %uls;
   }
   .icon {
     position: fixed;
@@ -81,5 +77,3 @@ $text_1: #222;
 .outline-nav-menu.closed {
   overflow: hidden;
 }
-
-@import "icon-animated";

@@ -6,15 +6,25 @@ const defaultConfig = {
 }
 
 const OUTLINE_TAGS = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6']
+const OUTLINE_DIV = 'otl-toc'
 
 function Outline(config) {
   this.config = Object.assign({}, defaultConfig, config)
   this.$container = document.querySelector(this.config.container)
-  const tags = findHTags(this.$container)
-  markTags(tags)
-  const sections = buildStructure(tags)
-  const $toc = genTOCDom(sections).outerHTML
-  this.$container.innerHTML = this.$container.innerHTML.replace(this.config.tocTag[0], $toc)
+  this.update()
+}
+
+Outline.prototype._generateTOCDom = function _generateTOCDom() {
+  return genTOCDom(buildStructure(markTags(findHTags(this.$container))))
+}
+
+Outline.prototype.update = function update() {
+  const $toc = this._generateTOCDom()
+  if (document.querySelector(`.${OUTLINE_DIV}`)) {
+    document.querySelector(`.${OUTLINE_DIV}`).innerHTML = $toc.innerHTML
+  } else {
+    this.$container.innerHTML = this.$container.innerHTML.replace(this.config.tocTag[0], $toc.outerHTML)
+  }
 }
 
 function getLevel(hTag) {
@@ -50,6 +60,7 @@ function markTags(tags) {
   tags.forEach(tag => {
     tag.setAttribute('id', guid())
   })
+  return tags
 }
 
 /**
@@ -97,10 +108,11 @@ function buildStructure(tags) {
 function genTOCDom(sections) {
   const createChildren = children => {
     const $ul = document.createElement('ul')
+    $ul.setAttribute('class', 'otl-list__ul')
     children.forEach(child => {
       const $li = document.createElement('li')
       const hash = child.element.getAttribute('id')
-      const template = `<a href="#${hash}">${getHTagText(child.element)}</a>`
+      const template = `<a class="otl-list__link" href="#${hash}">${getHTagText(child.element)}</a>`
       $li.innerHTML = template
       $ul.appendChild($li)
       if (child.children) {
@@ -114,13 +126,11 @@ function genTOCDom(sections) {
 
   const $toc = document.createElement('div')
   const $tocWrap = document.createElement('div')
-  $toc.setAttribute('class', 'outline-content-table')
-  $tocWrap.setAttribute('class', 'outline-content-wrap')
+  $toc.setAttribute('class', OUTLINE_DIV)
+  $tocWrap.setAttribute('class', 'otl-list')
   $tocWrap.appendChild(createChildren(sections))
   $toc.appendChild($tocWrap)
   return $toc
 }
 
-export default config => {
-  return new Outline(config)
-}
+export default Outline
