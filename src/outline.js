@@ -56,7 +56,7 @@
       });
     },
     genContentTable:function(){
-      var contentTable = $("<div class='outline-content-wrap'><div class='title'>目录</div></div>");
+      var contentTable = $("<div class='outline-content-wrap'><div class='title'>目录2</div></div>");
       var domPinter = contentTable.append("<ul></ul>").find(">ul");
       var list = [];
       var content = $(this.selector);

@@ -20,5 +20,14 @@
     "grunt-image": "^1.2.1",
     "load-grunt-tasks": "^3.4.0",
     "webpack": "^1.12.10"
+  },
+  "scripts": {
+    "watch": "npm run build:js -- --watch & npm run build:css -- --watch",
+    "build:css": "node-sass-chokidar src/scss -o dist/css --recursive",
+    "build:js": "rollup src/main.js --output.format umd --name \"Outline\" --output.file dist/js/outline.js",
+    "build": "npm run build:js & npm run build:css"
+  },
+  "dependencies": {
+    "node-sass-chokidar": "^0.0.3"
   }
 }
