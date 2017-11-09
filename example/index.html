@@ -7,13 +7,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, user-scalable=no">
   <link rel="stylesheet" href="../lib/normalize.css">
-  <link rel="stylesheet" href="../dist/css/outline.min.css">
+  <link rel="stylesheet" href="../dist/css/outline.css">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <div class="container">
     <h1>MIT许可证</h1>
+    {{TOC}}
     <div class="content">
       <p>MIT许可证（The MIT License）是许多软件授权条款中，被广泛使用的其中一种。与其他常见的软件授权条款（如GPL、LGPL、BSD）相比，MIT是相对宽松的软件授权条款。</p>
       <h2>简介</h2>
@@ -44,11 +45,12 @@
       <p>MIT条款可与其他授权条款并存。另外，MIT条款也是自由软件基金会（FSF）所认可的自由软件授权条款，与GPL兼容。</p>
     </div>
   </div>
-  <script src="../lib/jquery/jquery.min.js"></script>
-  <script src="../dist/js/outline.min.js"></script>
-  <script>$(".content").outline({
-      hasNavMenu: true
-    });</script>
+  <script src="../dist/js/outline.js"></script>
+  <script>
+    Outline({
+      container: '.container'
+    })
+  </script>
 </body>
 
 </html>
