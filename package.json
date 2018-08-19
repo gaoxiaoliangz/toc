@@ -3,7 +3,9 @@
   "version": "0.3.0",
   "description": "Generate the toc of your document",
   "scripts": {
-    "start": "parcel example/index.html"
+    "start": "parcel example/index.html",
+    "prebuild": "rm -rf dist",
+    "build": "parcel build src/index.js --out-file toc.js"
   },
   "repository": {
     "type": "git",
