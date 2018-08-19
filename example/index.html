@@ -6,18 +6,16 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, user-scalable=no">
-  <link rel="stylesheet" href="../lib/normalize.css">
-  <link rel="stylesheet" href="../dist/outline.css">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <div class="container">
     <h1>MIT许可证</h1>
-    {{TOC}}
+    <div class="toc-placeholder"></div>
     <div class="content">
       <p>MIT许可证（The MIT License）是许多软件授权条款中，被广泛使用的其中一种。与其他常见的软件授权条款（如GPL、LGPL、BSD）相比，MIT是相对宽松的软件授权条款。</p>
-      <h2>简介</h2>
+      <h2 id="intro h2-tag">简介</h2>
       <p>MIT许可证之名源自麻省理工学院（Massachusetts Institute of Technology, MIT），又称“X条款”（X License）或“X11条款”（X11 License）</p>
       <p>MIT内容与三条款BSD许可证（3-clause BSD license）内容颇为近似，但是赋予软件被授权人更大的权利与更少的限制。</p>
       <h2>运用情形</h2>
@@ -45,11 +43,10 @@
       <p>MIT条款可与其他授权条款并存。另外，MIT条款也是自由软件基金会（FSF）所认可的自由软件授权条款，与GPL兼容。</p>
     </div>
   </div>
-  <script src="../dist/outline.js"></script>
+  <script src="../src/index.js"></script>
   <script>
-    Outline({
-      container: '.container'
-    })
+    const tocDOM = toc.generate(document.querySelector('.container'))
+    const wrap = document.querySelector('.toc-placeholder').appendChild(tocDOM)
   </script>
 </body>
 
